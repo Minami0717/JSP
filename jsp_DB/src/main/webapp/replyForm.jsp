@@ -14,6 +14,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	table {text-align: center}
+</style>
 </head>
 <body>
 	<table>
@@ -33,6 +36,9 @@
 		<%
 			String boardId = request.getParameter("uid");
 			if (getId.equals(boardId)) {
+				%><tr>
+					<th>댓글번호<th>아이디<th colspan=3>댓글
+				</tr><%
 				List<Reply> replyList = ReplyDao.getInstance().selectAll();
 				for (Reply reply : replyList) {
 				%><tr>
@@ -45,9 +51,9 @@
 				%>
 				<tr>
 					<td colspan=5><form action=appendReply.jsp method=post>
-						<input type=hidden value=<%=getId %> id=replyId>
-						<input type=hidden>
-						<input type=text placeholder=댓글 id=reply>
+						<input type=hidden value=<%=getId %> name=replyId>
+						<input type=hidden value=<%=boardId %> name=uid>
+						<input type=text placeholder=댓글 name=reply>
 						<input type=submit value=댓글등록>
 					</form>
 				</tr>

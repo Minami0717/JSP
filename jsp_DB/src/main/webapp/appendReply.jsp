@@ -7,6 +7,7 @@
 	request.setCharacterEncoding("utf-8");
 	String replyId = request.getParameter("replyId");
 	String comment = request.getParameter("reply");
+	String uid = request.getParameter("uid");
 	
 	Reply reply = new Reply();
 	reply.setId(replyId);
@@ -14,7 +15,7 @@
 	
 	int result = ReplyDao.getInstance().insert(reply);
 	if(result != 0)
-		response.sendRedirect("replyForm.jsp");
+		response.sendRedirect("replyForm.jsp?uid=" + uid);
 %>
 <html>
 <head>

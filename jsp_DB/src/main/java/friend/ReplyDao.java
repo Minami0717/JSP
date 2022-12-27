@@ -50,9 +50,10 @@ public class ReplyDao {
 			
 			while (rs.next()) {
 				Reply reply = new Reply();
-				reply.setId(rs.getString("id"));
+				reply.setIndex(rs.getInt("replyindex"));
+				reply.setNickname(rs.getString("nickname"));
 				reply.setContents(rs.getString("contents"));
-				reply.setBoardId(rs.getString("boardId"));
+				reply.setPost_idx(rs.getInt("post_idx"));
 				list.add(reply);
 			}
 		} catch (SQLException e) {
@@ -64,9 +65,10 @@ public class ReplyDao {
 	public int insert(Reply reply) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into reply(id,contents) values(?,?)");
-			pstmt.setString(1, reply.getId());
+			pstmt = conn.prepareStatement("insert into reply(nickname,contents,post_idx) values(?,?,?)");
+			pstmt.setString(1, reply.getNickname());
 			pstmt.setString(2, reply.getContents());
+			pstmt.setInt(3, reply.getPost_idx());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

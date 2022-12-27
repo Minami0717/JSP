@@ -2,23 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-	Cookie[] cookies = request.getCookies();
-%>
-<%!
-	private String getCookieValue(Cookie[] cookies, String name) {
-	String value = null;
-	if (cookies == null)
-		return null;
-	for (Cookie cookie : cookies) {
-		if (cookie.getName().equals(name))
-			return cookie.getValue();
-	}
-	return null;
-}
-%>
 <%	
-	String id = getCookieValue(cookies, "id");
+	String id = (String)session.getAttribute("id");
 	int result = FriendDao.getInstance().delete(id);
 	if(result != 0) {
 		%><script>

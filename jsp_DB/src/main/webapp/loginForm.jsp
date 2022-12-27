@@ -6,22 +6,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	div {background-color: cornflowerblue; display: inline-block;
-		 padding: 50px;}
-	body {background-color: aqua; text-align: center;}
+	div {display: inline-block; padding: 30px; border: 2px solid #3b4890;}
+	body {text-align: center;}
 	input {margin: 3px;}
-	.input {width: 223px; height: 30px;}
-	#login {width: 230px; height: 40px; background-color: khaki; border: none;}
+	.input {width: 280px; height: 30px; background: #f3f3f3; border: none;}
+	#login {width: 287px; height: 40px; background-color: #3b4890;
+	color: white; border: none;}
 	.button {height: 30px;}
+	a {text-decoration: none; color: black;}
 </style>
 </head>
 <body>
 	<div align=center>
-		<h1>로그인</h1>
 		<form action="checkID.jsp" method=post>
 			<table>
 				<tr>
-					<td><input type=text placeholder="아이디" class=input name=id></td>
+					<td><input type=text placeholder="식별 코드" class=input name=id></td>
 				</tr>
 				<tr>
 					<td><input type=password placeholder="비밀번호" class=input name=pw></td>
@@ -30,11 +30,16 @@
 					<td><input type=submit value=로그인 id=login></td>
 				</tr>
 				<tr>
+					<td><input type="checkbox">식별 코드 저장
+				</tr>
+				<!-- <tr>
 					<td><input type=reset value=다시입력 class=button>
 					<input type=button value=처음으로 onclick="location.href='main.jsp'" class=button>
 					<input type=button value=회원가입 onclick="location.href='joinForm.jsp'" class=button></td>
-				</tr>
+				</tr> -->
 			</table>
+			<hr>
+			<a href=#>식별 코드 찾기</a> | <a href=#>비밀번호 찾기</a> | <a href=joinForm.jsp>고정닉 신청</a>
 		</form>
 	</div>
 </body>

@@ -33,11 +33,16 @@
 	String job = friend.getJob();
 	
 	if(inputId.equals(id) && inputPw.equals(pw)) {
-		response.addCookie(new Cookie("id", id));
+		/* response.addCookie(new Cookie("id", id));
 		response.addCookie(new Cookie("pw", pw));
 		response.addCookie(new Cookie("name", name));
 		response.addCookie(new Cookie("age", age));
-		response.addCookie(new Cookie("job", job));
+		response.addCookie(new Cookie("job", job)); */
+		session.setAttribute("id", id);
+		session.setAttribute("pw", pw);
+		session.setAttribute("name", name);
+		session.setAttribute("age", age);
+		session.setAttribute("job", job);
 		response.sendRedirect("loginSucc.jsp");
 	}
 	else {

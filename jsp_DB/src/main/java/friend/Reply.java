@@ -2,9 +2,9 @@ package friend;
 
 public class Reply {
 	private int index;
-	private String id;
+	private String nickname;
 	private String contents;
-	private String boardId;
+	private int post_idx;
 	
 	public int getIndex() {
 		return index;
@@ -12,11 +12,11 @@ public class Reply {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-	public String getId() {
-		return id;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getContents() {
 		return contents;
@@ -24,10 +24,10 @@ public class Reply {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getBoardId() {
-		return boardId;
+	public int getPost_idx() {
+		return post_idx;
 	}
-	public void setBoardId(String boardId) {
-		this.boardId = boardId;
+	public void setPost_idx(int post_idx) {
+		this.post_idx = post_idx;
 	}
 }

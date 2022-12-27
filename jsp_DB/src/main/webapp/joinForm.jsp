@@ -6,34 +6,50 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	div {background-color: cornflowerblue; display: inline-block;
-		 padding: 50px;}
-	body {background-color: aqua; text-align: center;}
+	div {display: inline-block; padding: 30px; width: 80%; border: 1px solid black;}
+	body {text-align: center;}
 	input {margin: 3px;}
-	.input {width: 223px; height: 30px;}
-	#join {width: 230px; height: 40px; background-color: khaki; border: none;}
+	.input {width: 500px; height: 30px; margin-left: 60px;}
+	#join {width: 607px; height: 40px; border: none;}
 	.button {width: 110px; height: 30px;}
+	input[name=pwCheck] {margin-left: 170px;}
+	input[name=name] {width: 400px;}
+	input[name=email] {width: 150px; margin-left: 0}
+	select {height: 37px;}
 </style>
 </head>
 <body>
 	<div align=center>
-		<h1>회원가입</h1>
 		<form action="join.jsp" method=post>
 			<table>
 				<tr>
-					<td><input type=text placeholder="아이디" class=input name=id></td>
+					<td>개인 식별 코드<input type=text placeholder="개인 식별 코드" class=input name=id></td>
 				</tr>
 				<tr>
-					<td><input type=password placeholder="비밀번호" class=input name=pw></td>
+					<td>비밀번호 입력<input type=password placeholder="비밀번호를 입력해 주세요." class=input name=pw></td>
 				</tr>
 				<tr>
-					<td><input type=password placeholder="비밀번호확인" class=input name=pwCheck></td>
+					<td><input type=password placeholder="비밀번호를 재확인해 주세요." class=input name=pwCheck></td>
 				</tr>
 				<tr>
-					<td><input type=text placeholder="이름" class=input name=name></td>
+					<td>
+						닉네임 만들기<input type=text placeholder="닉네임을 입력해 주세요." class=input name=name>
+						<select>
+							<option>비고정닉
+							<option>고정닉
+						</select>
+					</td>
 				</tr>
 				<tr>
-					<td><input type="number" placeholder="나이" class=input name=age></td>
+					<td>
+						보안 코드 발급 이메일<input type="text" class=input name=email> @
+						<input type="text" class=input name=email>
+						<select>
+							<option>이메일 선택
+							<option>naver.com
+							<option>직접 입력
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td><input type=text placeholder="직업" class=input name=job></td>
