@@ -57,6 +57,7 @@ public class PostDao {
 				post.setDate(rs.getString("date"));
 				post.setHits(rs.getInt("hits"));
 				post.setRecommend(rs.getInt("recommend"));
+				post.setPw(rs.getString("pw"));
 				list.add(post);
 			}
 		} catch (SQLException e) {
@@ -89,11 +90,12 @@ public class PostDao {
 	public int insert(Post post) {
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("insert into post(title,content,writer,date) values(?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into post(title,content,writer,date,pw) values(?,?,?,?,?)");
 			pstmt.setString(1, post.getTitle());
 			pstmt.setString(2, post.getContent());
 			pstmt.setString(3, post.getWriter());
 			pstmt.setString(4, post.getDate());
+			pstmt.setString(5, post.getPw());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

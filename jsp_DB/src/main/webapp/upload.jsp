@@ -7,6 +7,14 @@
 <!DOCTYPE html>
 <%
 	request.setCharacterEncoding("utf-8");
+	if (request.getParameter("nick").isEmpty()) {
+		%><script>alert("닉네임을 입력하세요."); history.go(-1)</script><%
+		return;
+	}
+	if (request.getParameter("pw").isEmpty()) {
+		%><script>alert("닉네임을 입력하세요."); history.go(-1)</script><%
+		return;
+	}
 	if (request.getParameter("title").isEmpty()) {
 		%><script>alert("제목을 입력하세요."); history.go(-1)</script><%
 		return;
@@ -16,9 +24,10 @@
 		return;
 	}
 	
+	String writer = request.getParameter("nick");
+	String pw = request.getParameter("pw");
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");
-	String writer = (String)session.getAttribute("name");
 	String date = LocalDateTime.now().format(
 			DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	

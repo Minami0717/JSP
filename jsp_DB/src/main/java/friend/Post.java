@@ -8,7 +8,14 @@ public class Post {
 	private String date;
 	private int hits;
 	private int recommend;
+	private String pw;
 	
+	public String getPw() {
+		return pw;
+	}
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
 	public int getHits() {
 		return hits;
 	}

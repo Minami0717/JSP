@@ -1,3 +1,5 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="friend.ReplyDao"%>
 <%@page import="friend.Reply"%>
 <%@page import="friend.PostDao"%>
@@ -17,11 +19,27 @@
 	post.setHits(post.getHits()+1);
 	PostDao.getInstance().update(post);
 	
-	if (!nick.isEmpty()) {
+	if (nick != null) {
+		if(nick.isEmpty()) {
+			%><script>alert("닉네임을 입력하세요"); history.back()</script><%
+			return;
+		}
+		if(pw.isEmpty()) {
+			%><script>alert("비밀번호를 입력하세요"); history.back()</script><%
+			return;
+		}
+		if(text.isEmpty()) {
+			%><script>alert("댓글을 입력하세요"); history.back()</script><%
+			return;
+		}
+		
 		Reply reply = new Reply();
 		reply.setNickname(nick);
 		reply.setContents(text);
 		reply.setPost_idx(idx);
+		String date = LocalDateTime.now().format(
+				DateTimeFormatter.ofPattern("MM.dd HH:mm:ss"));
+		reply.setDate(date);
 		
 		ReplyDao.getInstance().insert(reply);
 	}
@@ -34,91 +52,122 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	#post {width: 100%; height: 500px;
-	border-top: 2px solid #3b4890; padding: 10px; position: relative;}
+	body {width: 60%; margin-left: 20%;}
+	#post {width: 100%; height: 820px;
+	border-top: 2px solid #3b4890; position: relative;}
+	#head {border-bottom: 1px solid gainsboro; padding: 10px 0 5px 10px;}
+	#sub {font-size: 13px;}
+	#con {padding: 10px;}
 	table {width: 100%; text-align: center;}
 	th {border-bottom: 1px solid #3b4890; border-top: 2px solid #3b4890;}
 	td {border-bottom: 1px solid gainsboro;}
 	a {text-decoration: none; color: black;}
 	#rec {border: 1px solid gainsboro; width: 300px;
 	height: 100px; text-align: center; position: absolute;
-	bottom: 100px; left: 40%;}
-	input[type=button] {margin-top: 40px;}
+	bottom: 50px; left: 35%;}
+	input[type=button] {margin-top: 20px; border-radius: 100px; width: 50px;
+	height: 50px; border: none; color: white; cursor: pointer;}
+	input[value=추천] {background: #3b4890;}
+	input[value=비추] {background: gray;}
 	input[type=text],input[type=password] {height: 30px;}
 	input[type=text] {margin-bottom: 5px;}
+	input[type=submit] {background: #3b4890; color: white; width: 85px; height: 30px;
+	border: none; cursor: pointer; border-radius: 2px;}
 	#comment {border-top: 2px solid #3b4890; padding: 10px;}
 	#np {display: inline-block;}
 	#np input {width: 120px;}
 	.left {text-align: left;}
-	#reply {margin-bottom: 50px; border-bottom: 2px solid #3b4890;}
+	#reply {border-bottom: 2px solid #3b4890;}
 	#text {padding: 10px;}
 	#text div:last-child {clear: both;}
 	#ta {float: right;}
+	textarea {width: 950px; height: 100px;}
+	#nick {width: 150px;}
+	button {width: 82px; height: 35px; background: #3b4890; color: white;
+	border: 1px solid #29367c; border-bottom-width: 3px; margin-top: 10px;
+	margin-bottom: 40px; font-weight: bold; border-radius: 2px;
+	cursor: pointer;}
+	#idea {margin-left: 10px; background: white; color: #3b4890;}
+	.right {float: right;}
+	#edit,#delete {background: #666; border-color: #444;}
+	#delete {margin: 10px;}
 </style>
 </head>
 <body>
-	<div id=post>
-		<b><%=post.getTitle() %></b><br>
-		<%=post.getWriter() %> | <%=post.getDate() %><hr>
-		<%=post.getContent() %>
-		<div id=rec>
-			<%=post.getRecommend() %> <input type=button value=추천>
-			<input type=button value=비추> <%=post.getRecommend() %>
-		</div>
-	</div>
-	<div id=reply>
-		<p>전체 댓글
-		<div id=comment>
-			<%
-				for (Reply r : replies) {
-					if (r.getPost_idx() == idx) {
-						%>
-						<div id=table>
-							<table>
-								<tr>
-									<td class=left><%=r.getNickname() %>
-									<td class=left><%=r.getContents() %>
-							</table>
-						</div>
-						<%
-					}
-				}
-			%>
-			<div id=text>
-				<form action="result.jsp" method=post>
-					<div id=np>
-						<input type="hidden" name=idx value=<%=idx%>>
-						<input type=text placeholder=닉네임 name=nickname><br>
-						<input type=password placeholder=비밀번호 name=pw>
-					</div>
-					<div id=ta>
-						<textarea rows="8" cols="100" name=text></textarea>
-					</div>
-					<div align=right><input type=submit value=등록></div>
-				</form>
+	<header>
+		<h1>Minami.com</h1>
+	</header>
+	<section>
+		<div id=post>
+			<div id=head>
+				<b><%=post.getTitle() %></b><br>
+				<p id=sub><a href=#><%=post.getWriter() %></a>&nbsp;&nbsp;|&nbsp;&nbsp;<%=post.getDate() %></p>
+			</div>
+			<div id=con><%=post.getContent() %></div>
+			<div id=rec>
+				<%=post.getRecommend() %> <input type=button value=추천>
+				<input type=button value=비추> <%=post.getRecommend() %>
 			</div>
 		</div>
-	</div>
-	<table>
-		<tr>
-			<th width=50px>번호
-			<th>제목
-			<th width=50px>글쓴이
-			<th width=100px>작성일
-			<th width=50px>조회
-			<th width=50px>추천
-		</tr>
-	<%
-		for(Post p : list) {
-			%><tr>
-				<td><%=p.getIdx() %>
-				<td class=left><a href="result.jsp?idx=<%=p.getIdx() %>"><%=p.getTitle() %></a>
-				<td><%=p.getWriter() %>
-				<td><%=p.getDate().substring(11,16) %>
-				<td><%=p.getHits() %>
-				<td><%=p.getRecommend() %><%
-		}
-	%>
-	</table>
+		<div id=reply>
+			<p>전체 댓글
+			<div id=comment>
+				<%
+					for (Reply r : replies) {
+						if (r.getPost_idx() == idx) {
+							%>
+							<div id=table>
+								<table>
+									<tr>
+										<td class=left id=nick><%=r.getNickname() %>
+										<td class=left><%=r.getContents() %>
+										<td><%=r.getDate() %>
+								</table>
+							</div>
+							<%
+						}
+					}
+				%>
+				<div id=text>
+					<form action="result.jsp" method=post>
+						<div id=np>
+							<input type="hidden" name=idx value=<%=idx%>>
+							<input type=text placeholder=닉네임 name=nickname><br>
+							<input type=password placeholder=비밀번호 name=pw>
+						</div>
+						<div id=ta>
+							<textarea name=text></textarea>
+						</div>
+						<div align=right><input type=submit value=등록></div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<button>전체글</button><button id=idea>개념글</button>
+		<button class=right onclick="location.href='write.jsp'">글쓰기</button>
+		<button class=right id=delete>삭제</button>
+		<button class=right id=edit>수정</button>
+		<table>
+			<tr>
+				<th width=50px>번호
+				<th>제목
+				<th width=50px>글쓴이
+				<th width=100px>작성일
+				<th width=50px>조회
+				<th width=50px>추천
+			</tr>
+		<%
+			for(Post p : list) {
+				%><tr>
+					<td><%=p.getIdx() %>
+					<td class=left><a href="result.jsp?idx=<%=p.getIdx() %>"><%=p.getTitle() %></a>
+					<td><%=p.getWriter() %>
+					<td><%=p.getDate().substring(11,16) %>
+					<td><%=p.getHits() %>
+					<td><%=p.getRecommend() %><%
+			}
+		%>
+		</table>
+	</section>
 </body>
 </html>

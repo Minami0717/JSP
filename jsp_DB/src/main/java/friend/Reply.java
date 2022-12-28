@@ -5,7 +5,14 @@ public class Reply {
 	private String nickname;
 	private String contents;
 	private int post_idx;
+	private String date;
 	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public int getIndex() {
 		return index;
 	}

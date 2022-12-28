@@ -1,3 +1,5 @@
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="friend.PostDao"%>
 <%@page import="friend.Post"%>
 <%@page import="java.util.List"%>
@@ -31,11 +33,17 @@
 		</tr>
 	<%
 		for(Post post : list) {
+			String date;
+			if (!post.getDate().substring(0,10).equals(LocalDate.now().toString()))
+				date = post.getDate().substring(5,10);
+			else
+				date = post.getDate().substring(11,16);
+			
 			%><tr>
 				<td><%=post.getIdx() %>
 				<td><a href="result.jsp?idx=<%=post.getIdx() %>"><%=post.getTitle() %></a>
 				<td><%=post.getWriter() %>
-				<td><%=post.getDate().substring(11,16) %>
+				<td><%=date %>
 				<td><%=post.getHits() %>
 				<td><%=post.getRecommend() %><%
 		}
